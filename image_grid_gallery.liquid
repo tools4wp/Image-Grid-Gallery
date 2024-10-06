@@ -1,0 +1,371 @@
+{% schema %}
+{
+  "name": "Image Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "grid_column_size",
+      "label": "Grid Column Size (1-9)",
+      "min": 1,
+      "max": 9,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Width (px)",
+      "min": 900,
+      "max": 1200,
+      "default": 1100,
+      "step": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "t4wp_grid_gap",
+      "label": "Grid Gap (0-20px)",
+      "min": 0,
+      "max": 20,
+      "default": 7,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Block Radius (0-50px)",
+      "min": 0,
+      "max": 50,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "grid_height",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Grid Height",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Extra"
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_bottom_margin",
+      "default": false,
+      "label": "Remove Bottom Margin"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image Link"
+        },
+        {
+          "type": "header",
+          "content": "Position"
+        },
+        {
+          "type": "range",
+          "id": "column_start",
+          "label": "Column Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "column_end",
+          "label": "Column End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        },
+        {
+          "type": "range",
+          "id": "row_start",
+          "label": "Row Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "row_end",
+          "label": "Row End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        }
+      ]
+    },
+    {
+      "name": "Text Block",
+      "type": "grid-text-item",
+      "settings": [
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "id": "text",
+          "type": "text",
+          "label": "Title",
+          "default": "Title Here"
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "label": "Subtitle",
+          "default": "Subtitle Here"
+        },
+        {
+          "id": "text_box_url",
+          "type": "url",
+          "label": "Link",
+        },
+        {
+          "type": "range",
+          "id": "text_box_margin",
+          "label": "Text Box Margin",
+          "min": 0,
+          "max": 50,
+          "default": 5,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "text_box_padding",
+          "min": 0,
+          "max": 50,
+          "default": 0,
+          "label": "Text Box Padding",
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "text_padding",
+          "label": "Text Padding",
+          "min": 0,
+          "max": 50,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Position"
+        },
+        {
+          "type": "range",
+          "id": "column_start",
+          "label": "Column Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "column_end",
+          "label": "Column End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        },
+        {
+          "type": "range",
+          "id": "row_start",
+          "label": "Row Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "row_end",
+          "label": "Row End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Grid Gallery",
+      "category": "Custom"
+    }
+  ]
+}
+
+{% endschema %}
+
+<style>
+  .parent {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.grid_column_size }}, 1fr);
+    grid-template-rows: auto;
+    gap: {{ section.settings.t4wp_grid_gap }}px;
+    height: {{ section.settings.grid_height }}px;
+  }
+      
+  @media only screen and (max-width: 768px) {
+    .image-wrapper img {
+        transition: none !important; /* Ensuring transition is disabled */
+    }
+    .image-wrapper {
+        border-radius: 0px !important; /* Ensuring border radius is 0 */
+    }
+    .image-block {
+        border-radius: 0px !important; /* Ensuring border radius is 0 */
+    }
+    .text-block {
+        border-radius: 0px !important; /* Ensuring text block has no border radius */
+    }
+    .image-wrapper img:hover {
+    transform: none !important;
+    }
+    .parent {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 0px !important;
+    }
+    .t4wp_container {
+      width: auto;
+    }
+  }
+  .image-block {
+      overflow: hidden; /* Ensures any overflow is hidden */
+      border-radius: {{ section.settings.image_radius }}px; /* Add border radius here */
+  }
+  
+  .image-wrapper {
+      display: block; /* Make the anchor a block-level element */
+      width: 100%;
+      height: 100%;
+      border-radius: {{ section.settings.image_radius }}px; /* Same radius as the block */
+      overflow: hidden; /* Clip the image to the rounded corners */
+  }
+  
+  .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease; /* Smooth transition for the zoom effect */
+  }
+  
+  .image-wrapper img:hover {
+      transform: scale(1.1); /* Zoom in by 10% on hover */
+  }
+  .text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: {{ section.settings.image_radius }}px; /* Add border radius here */
+    padding: 7px;
+  }
+  .t4wp_container {
+    margin: 0 auto;
+  }
+</style>
+  
+
+
+<div class="t4wp_container" style="{% if section.settings.full_width %}width: 100%;{% else %}max-width: {{ section.settings.container_width }}px; margin: 0 auto;{% endif %}">
+  <div class="image-grid-gallery" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; {% unless section.settings.remove_bottom_margin %}margin-bottom: 90px;{% endunless %}">
+    <div class="parent">
+      {% for block in section.blocks %}
+      {% if block.type == 'image_block' and block.settings.image %}
+          <div class="image-block" style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }}; grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }};">
+              {% if block.settings.link %}
+                  <a href="{{ block.settings.link }}" class="image-wrapper">
+                      <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
+                  </a>
+              {% else %}
+                  <div class="image-wrapper">
+                      <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
+                  </div>
+              {% endif %}
+          </div>
+  
+      {% elsif block.type == 'grid-text-item' %}
+          <div class="text-block" style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }}; grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }}; padding-top: {{ block.settings.text_box_padding }}px; padding-bottom: {{ block.settings.text_box_padding }}px; background-color: {{ block.settings.background_color }}; margin: {{ block.settings.text_box_margin }}px;">
+              {% if block.settings.text_box_url %}
+                  <a href="{{ block.settings.text_box_url }}" style="color: {{ block.settings.text_color }}; text-decoration: none; padding-top: {{ block.settings.text_padding }}px; padding-bottom: {{ block.settings.text_padding }}px;">
+                      <h1 style="color: {{ block.settings.text_color }};">
+                          {{ block.settings.text }}
+                      </h1>
+                      <h2 style="color: {{ block.settings.text_color }};">
+                          {{ block.settings.subtitle }}
+                      </h2>
+                  </a>
+              {% else %}
+                  <h1 style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.text }}
+                  </h1>
+                  <h2 style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.subtitle }}
+                  </h2>
+              {% endif %}
+          </div>
+      {% endif %}
+  {% endfor %}
+
+    </div>
+  </div>
+</div>
