@@ -290,6 +290,7 @@
   .image-block {
       overflow: hidden; /* Ensures any overflow is hidden */
       border-radius: {{ section.settings.image_radius }}px; /* Add border radius here */
+      height: 100%;
   }
   
   .image-wrapper {
@@ -316,9 +317,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: {{ section.settings.image_radius }}px; /* Add border radius here */
+    border-radius: {{ section.settings.image_radius }}px;
     padding: 7px;
+    height: 100%; /* Ensure it takes up the full height */
+    overflow: hidden; /* Hide any overflow if needed */
   }
+
   .t4wp_container {
     margin: 0 auto;
   }
