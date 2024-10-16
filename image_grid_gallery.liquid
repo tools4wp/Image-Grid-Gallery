@@ -153,21 +153,27 @@
           "default": "#ffffff"
         },
         {
+          "id": "subtitle",
+          "type": "text",
+          "label": "Subheading",
+          "default": "Subtitle Here"
+        },
+        {
           "id": "text",
           "type": "text",
-          "label": "Title",
+          "label": "Heading",
           "default": "Title Here"
         },
         {
-          "id": "subtitle",
-          "type": "text",
-          "label": "Subtitle",
-          "default": "Subtitle Here"
+          "id": "additional_text",
+          "type": "textarea",
+          "label": "Additional Text",
+          "default": "Additional Text"
         },
         {
           "id": "text_box_url",
           "type": "url",
-          "label": "Link",
+          "label": "Link"
         },
         {
           "type": "range",
@@ -251,125 +257,142 @@
 
 {% endschema %}
 
+
+{% assign grid_column_size = section.settings.grid_column_size %}
+{% assign grid_gap = section.settings.t4wp_grid_gap %}
+{% assign grid_height = section.settings.grid_height %}
+{% assign image_radius = section.settings.image_radius %}
+{% assign container_width = section.settings.container_width %}
+{% assign padding_top = section.settings.padding_top %}
+{% assign padding_bottom = section.settings.padding_bottom %}
+{% assign full_width = section.settings.full_width %}
+{% assign remove_bottom_margin = section.settings.remove_bottom_margin %}
+
+<div class="t4wp_container" style="{% if full_width %}width: 100%;{% else %}max-width: {{ container_width }}px; margin: 0 auto;{% endif %}">
+  <div class="image-grid-gallery" style="padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; {% unless remove_bottom_margin %}margin-bottom: 90px;{% endunless %}">
+    <div class="parent">
+      {% for block in section.blocks %}
+        {% if block.type == 'image_block' and block.settings.image %}
+          <div class="image-block"
+            style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }};
+            grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }};">
+            {% if block.settings.link %}
+              <a href="{{ block.settings.link }}" class="image-wrapper">
+                <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
+              </a>
+            {% else %}
+              <div class="image-wrapper">
+                <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
+              </div>
+            {% endif %}
+          </div>
+        {% elsif block.type == 'grid-text-item' %}
+          <a href="{{ block.settings.text_box_url }}" class="text-block"
+            style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }};
+            grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }};
+            padding-top: {{ block.settings.text_box_padding }}px;
+            padding-bottom: {{ block.settings.text_box_padding }}px;
+            background-color: {{ block.settings.background_color }};
+            margin: {{ block.settings.text_box_margin }}px; text-decoration: none;">
+            <h2 class="text-subtitle" style="color: {{ block.settings.text_color }};">
+              {{ block.settings.subtitle }}
+            </h2>
+            <h1 class="text-title" style="color: {{ block.settings.text_color }};">
+              {{ block.settings.text }}
+            </h1>
+            {% if block.settings.additional_text %}
+              <p class="additional-text" style="color: {{ block.settings.text_color }};">
+                {{ block.settings.additional_text }}
+              </p>
+            {% endif %}
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 <style>
+  /* Parent grid container */
   .parent {
     display: grid;
-    grid-template-columns: repeat({{ section.settings.grid_column_size }}, 1fr);
+    grid-template-columns: repeat({{ grid_column_size }}, 1fr);
     grid-template-rows: auto;
-    gap: {{ section.settings.t4wp_grid_gap }}px;
-    height: {{ section.settings.grid_height }}px;
+    gap: {{ grid_gap }}px;
+    height: {{ grid_height }}px;
   }
-      
-  @media only screen and (max-width: 768px) {
-    .image-wrapper img {
-        transition: none !important; /* Ensuring transition is disabled */
-    }
-    .image-wrapper {
-        border-radius: 0px !important; /* Ensuring border radius is 0 */
-    }
-    .image-block {
-        border-radius: 0px !important; /* Ensuring border radius is 0 */
-    }
-    .text-block {
-        border-radius: 0px !important; /* Ensuring text block has no border radius */
-    }
-    .image-wrapper img:hover {
-    transform: none !important;
-    }
-    .parent {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    gap: 0px !important;
-    }
-    .t4wp_container {
-      width: auto;
-    }
-  }
+
+  /* Image block */
   .image-block {
-      overflow: hidden; /* Ensures any overflow is hidden */
-      border-radius: {{ section.settings.image_radius }}px; /* Add border radius here */
-      height: 100%;
+    overflow: hidden;
+    border-radius: {{ image_radius }}px;
+    height: 100%;
   }
-  
+
   .image-wrapper {
-      display: block; /* Make the anchor a block-level element */
-      width: 100%;
-      height: 100%;
-      border-radius: {{ section.settings.image_radius }}px; /* Same radius as the block */
-      overflow: hidden; /* Clip the image to the rounded corners */
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: {{ image_radius }}px;
+    overflow: hidden;
   }
-  
+
   .image-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease; /* Smooth transition for the zoom effect */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
   }
-  
+
   .image-wrapper img:hover {
-      transform: scale(1.1); /* Zoom in by 10% on hover */
+    transform: scale(1.1);
   }
+
+  /* Text block */
   .text-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: {{ section.settings.image_radius }}px;
-    padding: 7px;
-    /* height: 100%; Ensure it takes up the full height */
-    overflow: hidden; /* Hide any overflow if needed */
+    border-radius: {{ image_radius }}px;
+    cursor: pointer; /* Make it look clickable */
+  }
+
+  .text-title,
+  .text-subtitle {
+    margin: 0; /* Reset default margins to ensure consistent spacing */
+  }
+
+  .additional-text {
+    font-size: 16px; /* Adjust the font size as needed */
+    margin-top: 10px; /* Space between subtitle/title and additional text */
   }
 
   .t4wp_container {
     margin: 0 auto;
   }
+
+  /* Mobile responsiveness */
+  @media only screen and (max-width: 768px) {
+    .image-wrapper img {
+      transition: none !important;
+    }
+
+    .image-wrapper, .image-block, .text-block {
+      border-radius: 0px !important;
+    }
+
+    .parent {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      gap: 0px !important;
+    }
+
+    .t4wp_container {
+      width: auto;
+    }
+  }
 </style>
-  
-
-
-<div class="t4wp_container" style="{% if section.settings.full_width %}width: 100%;{% else %}max-width: {{ section.settings.container_width }}px; margin: 0 auto;{% endif %}">
-  <div class="image-grid-gallery" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; {% unless section.settings.remove_bottom_margin %}margin-bottom: 90px;{% endunless %}">
-    <div class="parent">
-      {% for block in section.blocks %}
-      {% if block.type == 'image_block' and block.settings.image %}
-          <div class="image-block" style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }}; grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }};">
-              {% if block.settings.link %}
-                  <a href="{{ block.settings.link }}" class="image-wrapper">
-                      <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
-                  </a>
-              {% else %}
-                  <div class="image-wrapper">
-                      <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
-                  </div>
-              {% endif %}
-          </div>
-  
-      {% elsif block.type == 'grid-text-item' %}
-          <div class="text-block" style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }}; grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }}; padding-top: {{ block.settings.text_box_padding }}px; padding-bottom: {{ block.settings.text_box_padding }}px; background-color: {{ block.settings.background_color }}; margin: {{ block.settings.text_box_margin }}px;">
-              {% if block.settings.text_box_url %}
-                  <a href="{{ block.settings.text_box_url }}" style="color: {{ block.settings.text_color }}; text-decoration: none; padding-top: {{ block.settings.text_padding }}px; padding-bottom: {{ block.settings.text_padding }}px;">
-                      <h1 style="color: {{ block.settings.text_color }};">
-                          {{ block.settings.text }}
-                      </h1>
-                      <h2 style="color: {{ block.settings.text_color }};">
-                          {{ block.settings.subtitle }}
-                      </h2>
-                  </a>
-              {% else %}
-                  <h1 style="color: {{ block.settings.text_color }};">
-                      {{ block.settings.text }}
-                  </h1>
-                  <h2 style="color: {{ block.settings.text_color }};">
-                      {{ block.settings.subtitle }}
-                  </h2>
-              {% endif %}
-          </div>
-      {% endif %}
-  {% endfor %}
-
-    </div>
-  </div>
-</div>
