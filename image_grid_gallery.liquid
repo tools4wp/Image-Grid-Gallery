@@ -1,10 +1,10 @@
 {% schema %}
 {
-  "name": "Image Grid",
+  "name": "Grid Layout",
   "settings": [
     {
       "type": "range",
-      "id": "grid_column_size",
+      "id": "t4wp_grid_column_size",
       "label": "Grid Column Size (1-9)",
       "min": 1,
       "max": 9,
@@ -16,13 +16,13 @@
     },
     {
       "type": "checkbox",
-      "id": "full_width",
+      "id": "t4wp_full_width",
       "label": "Full Width",
       "default": false
     },
     {
       "type": "range",
-      "id": "container_width",
+      "id": "t4wp_container_width",
       "label": "Container Width (px)",
       "min": 900,
       "max": 1200,
@@ -41,7 +41,7 @@
     },
     {
       "type": "range",
-      "id": "image_radius",
+      "id": "t4wp_image_radius",
       "label": "Block Radius (0-50px)",
       "min": 0,
       "max": 50,
@@ -50,7 +50,7 @@
     },
     {
       "type": "range",
-      "id": "padding_top",
+      "id": "t4wp_padding_top",
       "min": 0,
       "max": 100,
       "step": 4,
@@ -60,7 +60,7 @@
     },
     {
       "type": "range",
-      "id": "padding_bottom",
+      "id": "t4wp_padding_bottom",
       "min": 0,
       "max": 100,
       "step": 4,
@@ -70,7 +70,7 @@
     },
     {
       "type": "range",
-      "id": "grid_height",
+      "id": "t4wp_grid_height",
       "min": 200,
       "max": 1200,
       "step": 10,
@@ -84,7 +84,7 @@
     },
     {
       "type": "checkbox",
-      "id": "remove_bottom_margin",
+      "id": "t4wp_remove_bottom_margin",
       "default": false,
       "label": "Remove Bottom Margin"
     }
@@ -96,12 +96,12 @@
       "settings": [
         {
           "type": "image_picker",
-          "id": "image",
+          "id": "t4wp_image",
           "label": "Image"
         },
         {
           "type": "url",
-          "id": "link",
+          "id": "t4wp_link",
           "label": "Image Link"
         },
         {
@@ -110,23 +110,7 @@
         },
         {
           "type": "range",
-          "id": "column_start",
-          "label": "Column Start (1-10)",
-          "min": 1,
-          "max": 10,
-          "default": 1
-        },
-        {
-          "type": "range",
-          "id": "column_end",
-          "label": "Column End (1-10)",
-          "min": 1,
-          "max": 10,
-          "default": 2
-        },
-        {
-          "type": "range",
-          "id": "row_start",
+          "id": "t4wp_row_start",
           "label": "Row Start (1-10)",
           "min": 1,
           "max": 10,
@@ -134,12 +118,28 @@
         },
         {
           "type": "range",
-          "id": "row_end",
+          "id": "t4wp_column_start",
+          "label": "Column Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "t4wp_row_end",
           "label": "Row End (1-10)",
           "min": 1,
           "max": 10,
           "default": 2
-        }
+        },        
+        {
+          "type": "range",
+          "id": "t4wp_column_end",
+          "label": "Column End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        }        
       ]
     },
     {
@@ -148,36 +148,36 @@
       "settings": [
         {
           "type": "color",
-          "id": "text_color",
+          "id": "t4wp_text_color",
           "label": "Text Color",
           "default": "#ffffff"
         },
         {
-          "id": "subtitle",
+          "id": "t4wp_subtitle",
           "type": "text",
           "label": "Subheading",
-          "default": "Subtitle Here"
+          "default": "Subheading Here"
         },
         {
-          "id": "text",
+          "id": "t4wp_heading",  // Fixed missing quote here
           "type": "text",
           "label": "Heading",
           "default": "Title Here"
         },
         {
-          "id": "additional_text",
+          "id": "t4wp_additional_text",
           "type": "textarea",
           "label": "Additional Text",
           "default": "Additional Text"
         },
         {
-          "id": "text_box_url",
+          "id": "t4wp_text_box_url",
           "type": "url",
           "label": "Link"
         },
         {
           "type": "range",
-          "id": "text_box_margin",
+          "id": "t4wp_text_box_margin",
           "label": "Text Box Margin",
           "min": 0,
           "max": 50,
@@ -186,7 +186,7 @@
         },
         {
           "type": "range",
-          "id": "text_box_padding",
+          "id": "t4wp_text_box_padding",
           "min": 0,
           "max": 50,
           "default": 0,
@@ -195,7 +195,7 @@
         },
         {
           "type": "range",
-          "id": "text_padding",
+          "id": "t4wp_text_padding",
           "label": "Text Padding",
           "min": 0,
           "max": 50,
@@ -208,23 +208,7 @@
         },
         {
           "type": "range",
-          "id": "column_start",
-          "label": "Column Start (1-10)",
-          "min": 1,
-          "max": 10,
-          "default": 1
-        },
-        {
-          "type": "range",
-          "id": "column_end",
-          "label": "Column End (1-10)",
-          "min": 1,
-          "max": 10,
-          "default": 2
-        },
-        {
-          "type": "range",
-          "id": "row_start",
+          "id": "t4wp_row_start",
           "label": "Row Start (1-10)",
           "min": 1,
           "max": 10,
@@ -232,18 +216,81 @@
         },
         {
           "type": "range",
-          "id": "row_end",
+          "id": "t4wp_column_start",
+          "label": "Column Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "t4wp_row_end",
           "label": "Row End (1-10)",
           "min": 1,
           "max": 10,
           "default": 2
-        },
+        },        
+        {
+          "type": "range",
+          "id": "t4wp_column_end",
+          "label": "Column End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        }  ,
         {
           "type": "color",
-          "id": "background_color",
+          "id": "t4wp_background_color",
           "label": "Background Color",
           "default": "#ffffff"
         }
+      ]
+    },
+    {
+      "type": "video_block_grid",
+      "name": "Video Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "t4wp_video_url",
+          "label": "Video URL"
+        },
+        {
+          "type": "header",
+          "content": "Position"
+        },
+        {
+          "type": "range",
+          "id": "t4wp_row_start",
+          "label": "Row Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "t4wp_column_start",
+          "label": "Column Start (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "t4wp_row_end",
+          "label": "Row End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        },        
+        {
+          "type": "range",
+          "id": "t4wp_column_end",
+          "label": "Column End (1-10)",
+          "min": 1,
+          "max": 10,
+          "default": 2
+        }  
       ]
     }
   ],
@@ -254,58 +301,77 @@
     }
   ]
 }
-
 {% endschema %}
 
+{% assign t4wp_grid_column_size = section.settings.t4wp_grid_column_size %}
+{% assign t4wp_grid_gap = section.settings.t4wp_grid_gap %}
+{% assign t4wp_grid_height = section.settings.t4wp_grid_height %}
+{% assign t4wp_image_radius = section.settings.t4wp_image_radius %}
+{% assign t4wp_container_width = section.settings.t4wp_container_width %}
+{% assign t4wp_padding_top = section.settings.t4wp_padding_top %}
+{% assign t4wp_padding_bottom = section.settings.t4wp_padding_bottom %}
+{% assign t4wp_full_width = section.settings.t4wp_full_width %}
+{% assign t4wp_remove_bottom_margin = section.settings.t4wp_remove_bottom_margin %}
 
-{% assign grid_column_size = section.settings.grid_column_size %}
-{% assign grid_gap = section.settings.t4wp_grid_gap %}
-{% assign grid_height = section.settings.grid_height %}
-{% assign image_radius = section.settings.image_radius %}
-{% assign container_width = section.settings.container_width %}
-{% assign padding_top = section.settings.padding_top %}
-{% assign padding_bottom = section.settings.padding_bottom %}
-{% assign full_width = section.settings.full_width %}
-{% assign remove_bottom_margin = section.settings.remove_bottom_margin %}
-
-<div class="t4wp_container" style="{% if full_width %}width: 100%;{% else %}max-width: {{ container_width }}px; margin: 0 auto;{% endif %}">
-  <div class="image-grid-gallery" style="padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; {% unless remove_bottom_margin %}margin-bottom: 90px;{% endunless %}">
+<div class="t4wp_container" style="{% if t4wp_full_width %}width: 100%;{% else %}max-width: {{ t4wp_container_width }}px; margin: 0 auto;{% endif %}">
+  <div class="t4wp_image-grid-gallery" style="padding-top: {{ t4wp_padding_top }}px; padding-bottom: {{ t4wp_padding_bottom }}px; {% unless t4wp_remove_bottom_margin %}margin-bottom: 90px;{% endunless %}">
     <div class="parent">
       {% for block in section.blocks %}
-        {% if block.type == 'image_block' and block.settings.image %}
+        {% if block.type == 'image_block' and block.settings.t4wp_image %}
           <div class="image-block"
-            style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }};
-            grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }};">
-            {% if block.settings.link %}
-              <a href="{{ block.settings.link }}" class="image-wrapper">
-                <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
+            style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
+            grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};">
+            {% if block.settings.t4wp_link %}
+              <a href="{{ block.settings.t4wp_link }}" class="image-wrapper">
+                <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </a>
             {% else %}
               <div class="image-wrapper">
-                <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.image.alt | escape }}" />
+                <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </div>
             {% endif %}
           </div>
         {% elsif block.type == 'grid-text-item' %}
-          <a href="{{ block.settings.text_box_url }}" class="text-block"
-            style="grid-column: {{ block.settings.column_start }} / {{ block.settings.column_end }};
-            grid-row: {{ block.settings.row_start }} / {{ block.settings.row_end }};
-            padding-top: {{ block.settings.text_box_padding }}px;
-            padding-bottom: {{ block.settings.text_box_padding }}px;
-            background-color: {{ block.settings.background_color }};
-            margin: {{ block.settings.text_box_margin }}px; text-decoration: none;">
-            <h2 class="text-subtitle" style="color: {{ block.settings.text_color }};">
-              {{ block.settings.subtitle }}
+          <a href="{{ block.settings.t4wp_text_box_url }}" class="text-block"
+            style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
+            grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};
+            padding-top: {{ block.settings.t4wp_text_box_padding }}px;
+            padding-bottom: {{ block.settings.t4wp_text_box_padding }}px;
+            background-color: {{ block.settings.t4wp_background_color }};
+            margin: {{ block.settings.t4wp_text_box_margin }}px; text-decoration: none;">
+            <h2 class="text-t4wp_subtitle" style="color: {{ block.settings.t4wp_text_color }};">
+              {{ block.settings.t4wp_subtitle }}
             </h2>
-            <h1 class="text-title" style="color: {{ block.settings.text_color }};">
-              {{ block.settings.text }}
+            <h1 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+              {{ block.settings.t4wp_heading }} <!-- Fixed reference to t4wp_heading -->
             </h1>
-            {% if block.settings.additional_text %}
-              <p class="additional-text" style="color: {{ block.settings.text_color }};">
-                {{ block.settings.additional_text }}
+            {% if block.settings.t4wp_additional_text %}
+              <p class="additional-text" style="color: {{ block.settings.t4wp_text_color }};">
+                {{ block.settings.t4wp_additional_text }}
               </p>
             {% endif %}
           </a>
+        {% elsif block.type == 'video_block_grid' %}
+          <div class="video-block"
+            style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
+            grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};">
+            {% assign t4wp_video_url = block.settings.t4wp_video_url %}
+            
+            {% if t4wp_video_url contains 'youtube.com' or t4wp_video_url contains 'youtu.be' %}
+              <iframe class="video-wrapper" width="100%" height="100%" src="{{ t4wp_video_url | replace: 'watch?v=', 'embed/' | replace: 'youtu.be/', 'embed/' }}" frameborder="0" allowfullscreen></iframe>
+            
+            {% elsif t4wp_video_url contains 'vimeo.com' %}
+              <iframe class="video-wrapper" width="100%" height="100%" src="{{ t4wp_video_url | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}" frameborder="0" allowfullscreen></iframe>
+            
+            {% else %}
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="{{ t4wp_video_url }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            {% endif %}
+          </div>
         {% endif %}
       {% endfor %}
     </div>
@@ -316,16 +382,16 @@
   /* Parent grid container */
   .parent {
     display: grid;
-    grid-template-columns: repeat({{ grid_column_size }}, 1fr);
+    grid-template-columns: repeat({{ t4wp_grid_column_size }}, 1fr);
     grid-template-rows: auto;
-    gap: {{ grid_gap }}px;
-    height: {{ grid_height }}px;
+    gap: {{ t4wp_grid_gap }}px;  /* Fixed reference to t4wp_grid_gap */
+    height: {{ t4wp_grid_height }}px;
   }
 
   /* Image block */
   .image-block {
     overflow: hidden;
-    border-radius: {{ image_radius }}px;
+    border-radius: {{ t4wp_image_radius }}px;
     height: 100%;
   }
 
@@ -333,7 +399,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: {{ image_radius }}px;
+    border-radius: {{ t4wp_image_radius }}px;
     overflow: hidden;
   }
 
@@ -355,28 +421,32 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: {{ image_radius }}px;
+    border-radius: {{ t4wp_image_radius }}px;
     cursor: pointer; /* Make it look clickable */
   }
 
   .text-title,
-  .text-subtitle {
+  .text-t4wp_subtitle {
     margin: 0; /* Reset default margins to ensure consistent spacing */
   }
 
   .additional-text {
     font-size: 16px; /* Adjust the font size as needed */
-    margin-top: 10px; /* Space between subtitle/title and additional text */
+    margin-top: 10px; /* Space between t4wp_subtitle/title and additional text */
   }
 
   .t4wp_container {
     margin: 0 auto;
   }
 
+  .video-block {
+    border-radius: {{ t4wp_image_radius }}px;
+  }
+
   /* Mobile responsiveness */
   @media only screen and (max-width: 768px) {
     .image-wrapper img {
-      transition: none !important;
+      transform: scale(1.1) !important;
     }
 
     .image-wrapper, .image-block, .text-block {
