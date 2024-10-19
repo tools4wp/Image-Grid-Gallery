@@ -159,6 +159,20 @@
           "default": "#ffffff"
         },
         {
+          "type": "image_picker",
+          "id": "t4wp_text_image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "range",
+          "id": "t4wp_icon_size",
+          "label": "Icon Size (px)",
+          "min": 10,
+          "max": 100,
+          "default": 30,
+          "unit": "px"
+        },
+        {
           "id": "t4wp_subtitle",
           "type": "text",
           "label": "Subheading",
@@ -169,17 +183,6 @@
           "type": "text",
           "label": "Heading",
           "default": "Title Here"
-        },
-        {
-          "id": "t4wp_additional_text",
-          "type": "textarea",
-          "label": "Additional Text",
-          "default": "Additional Text"
-        },
-        {
-          "id": "t4wp_text_box_url",
-          "type": "url",
-          "label": "Link"
         },
         {
           "type": "select",
@@ -200,6 +203,17 @@
               "label": "Large"
             }
           ]
+        },
+        {
+          "id": "t4wp_additional_text",
+          "type": "textarea",
+          "label": "Additional Text",
+          "default": "Additional Text"
+        },
+        {
+          "id": "t4wp_text_box_url",
+          "type": "url",
+          "label": "Link"
         },
         {
           "type": "range",
@@ -265,6 +279,10 @@
           "type": "text",
           "id": "t4wp_video_url",
           "label": "Video URL"
+        },
+        {
+          "type": "paragraph",
+          "content": "-Only YouTube and Vimeo Videos-"
         },
         {
           "type": "header",
@@ -335,7 +353,7 @@
             style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
             grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};">
             {% if block.settings.t4wp_link %}
-              <a href="{{ block.settings.t4wp_link }}" class="image-wrapper">
+              <a href="{{ block.settings.t4wp_link }}" class="image-wrapper ">
                 <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </a>
             {% else %}
@@ -352,6 +370,13 @@
                     padding-bottom: {{ block.settings.t4wp_text_box_padding }}px;
                     background-color: {{ block.settings.t4wp_background_color }};
                     margin: {{ block.settings.t4wp_text_box_margin }}px; text-decoration: none;">
+          
+            {% if block.settings.t4wp_text_image != blank %}
+              <div class="image-wrapper">
+                <img src="{{ block.settings.t4wp_text_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_text_image.alt | escape }}" style="width: {{ block.settings.t4wp_icon_size }}px; height: auto;"/>                  
+              </div>
+            {% endif %}
+          
             <p class="text-t4wp_subtitle" style="color: {{ block.settings.t4wp_text_color }};">
               {{ block.settings.t4wp_subtitle }}
             </p>
@@ -377,6 +402,7 @@
             {% endif %}
           </a>
 
+
         {% elsif block.type == 'video_block_grid' %}
           <div class="video-block"
             style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
@@ -384,11 +410,20 @@
             {% assign t4wp_video_url = block.settings.t4wp_video_url %}
             
             {% if t4wp_video_url contains 'youtube.com' or t4wp_video_url contains 'youtu.be' %}
-              <iframe class="video-wrapper" width="100%" height="100%" src="{{ t4wp_video_url | replace: 'watch?v=', 'embed/' | replace: 'youtu.be/', 'embed/' }}" frameborder="0" allowfullscreen></iframe>
-            
+              {% assign video_id = t4wp_video_url | split: '=' | last %}
+              <iframe class="video-wrapper" width="100%" height="100%" 
+                      src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&playlist={{ video_id }}" 
+                      class="js-youtube" 
+                      frameborder="0" 
+                      allow="autoplay; encrypted-media" 
+                      allowfullscreen>
+              </iframe>
             {% elsif t4wp_video_url contains 'vimeo.com' %}
-              <iframe class="video-wrapper" width="100%" height="100%" src="{{ t4wp_video_url | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}" frameborder="0" allowfullscreen></iframe>
-            
+              <iframe class="video-wrapper" width="100%" height="100%" 
+                      src="{{ t4wp_video_url | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}" 
+                      frameborder="0" 
+                      allowfullscreen>
+              </iframe>
             {% else %}
               <div class="video-wrapper">
                 <video controls>
@@ -397,6 +432,8 @@
                 </video>
               </div>
             {% endif %}
+
+
           </div>
         {% endif %}
       {% endfor %}
@@ -414,31 +451,30 @@
     height: {{ t4wp_grid_height }}px;
   }
 
-  /* Image block */
-  .image-block {
+/* Image block */
+.image-block {
     overflow: hidden;
     border-radius: {{ t4wp_image_radius }}px;
-    height: 100%;
-  }
+}
 
-  .image-wrapper {
+.image-wrapper {
     display: block;
     width: 100%;
-    height: 100%;
-    border-radius: {{ t4wp_image_radius }}px;
     overflow: hidden;
-  }
+}
 
-  .image-wrapper img {
+.image-wrapper img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Adjust as needed */
     transition: transform 0.3s ease;
-  }
+    border-radius: calc({{ t4wp_image_radius }}px / 2);
+}
 
-  .image-wrapper img:hover {
+.image-wrapper img:hover {
     transform: scale(1.1);
-  }
+}
+
 
   /* Text block */
   .text-block {
