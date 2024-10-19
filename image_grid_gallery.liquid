@@ -71,7 +71,7 @@
     {
       "type": "range",
       "id": "t4wp_grid_height",
-      "min": 200,
+      "min": 400,
       "max": 1200,
       "step": 10,
       "unit": "px",
@@ -353,11 +353,11 @@
             style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
             grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};">
             {% if block.settings.t4wp_link %}
-              <a href="{{ block.settings.t4wp_link }}" class="image-wrapper ">
+              <a href="{{ block.settings.t4wp_link }}" class="image-wrapper" style="height: 100%;">
                 <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </a>
             {% else %}
-              <div class="image-wrapper">
+              <div class="image-wrapper" style="height: 100%;">
                 <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </div>
             {% endif %}
@@ -465,7 +465,7 @@
 
 .image-wrapper img {
     width: 100%;
-    height: auto; /* Maintain aspect ratio */
+    height: 100%; /* Maintain aspect ratio */
     object-fit: cover; /* Adjust as needed */
     transition: transform 0.3s ease;
     border-radius: calc({{ t4wp_image_radius }}px / 2);
