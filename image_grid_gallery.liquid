@@ -148,6 +148,12 @@
       "settings": [
         {
           "type": "color",
+          "id": "t4wp_background_color",
+          "label": "Background Color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
           "id": "t4wp_text_color",
           "label": "Text Color",
           "default": "#ffffff"
@@ -176,6 +182,26 @@
           "label": "Link"
         },
         {
+          "type": "select",
+          "id": "t4wp_header_size",
+          "label": "Header Size",
+          "default": "medium",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ]
+        },
+        {
           "type": "range",
           "id": "t4wp_text_box_margin",
           "label": "Text Box Margin",
@@ -192,15 +218,6 @@
           "default": 0,
           "label": "Text Box Padding",
           "unit": "px"
-        },
-        {
-          "type": "range",
-          "id": "t4wp_text_padding",
-          "label": "Text Padding",
-          "min": 0,
-          "max": 50,
-          "unit": "px",
-          "default": 0
         },
         {
           "type": "header",
@@ -237,12 +254,6 @@
           "min": 1,
           "max": 10,
           "default": 2
-        }  ,
-        {
-          "type": "color",
-          "id": "t4wp_background_color",
-          "label": "Background Color",
-          "default": "#ffffff"
         }
       ]
     },
@@ -303,6 +314,8 @@
 }
 {% endschema %}
 
+
+   
 {% assign t4wp_grid_column_size = section.settings.t4wp_grid_column_size %}
 {% assign t4wp_grid_gap = section.settings.t4wp_grid_gap %}
 {% assign t4wp_grid_height = section.settings.t4wp_grid_height %}
@@ -333,24 +346,37 @@
           </div>
         {% elsif block.type == 'grid-text-item' %}
           <a href="{{ block.settings.t4wp_text_box_url }}" class="text-block"
-            style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
-            grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};
-            padding-top: {{ block.settings.t4wp_text_box_padding }}px;
-            padding-bottom: {{ block.settings.t4wp_text_box_padding }}px;
-            background-color: {{ block.settings.t4wp_background_color }};
-            margin: {{ block.settings.t4wp_text_box_margin }}px; text-decoration: none;">
-            <h2 class="text-t4wp_subtitle" style="color: {{ block.settings.t4wp_text_color }};">
+             style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
+                    grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};
+                    padding-top: {{ block.settings.t4wp_text_box_padding }}px;
+                    padding-bottom: {{ block.settings.t4wp_text_box_padding }}px;
+                    background-color: {{ block.settings.t4wp_background_color }};
+                    margin: {{ block.settings.t4wp_text_box_margin }}px; text-decoration: none;">
+            <p class="text-t4wp_subtitle" style="color: {{ block.settings.t4wp_text_color }};">
               {{ block.settings.t4wp_subtitle }}
-            </h2>
-            <h1 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
-              {{ block.settings.t4wp_heading }} <!-- Fixed reference to t4wp_heading -->
-            </h1>
+            </p>
+          
+            {% if block.settings.t4wp_header_size == 'small' %}
+              <h3 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+                {{ block.settings.t4wp_heading }}
+              </h3>
+            {% elsif block.settings.t4wp_header_size == 'large' %}
+              <h1 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+                {{ block.settings.t4wp_heading }}
+              </h1>
+            {% else %}
+              <h2 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+                {{ block.settings.t4wp_heading }}
+              </h2>
+            {% endif %}
+          
             {% if block.settings.t4wp_additional_text %}
               <p class="additional-text" style="color: {{ block.settings.t4wp_text_color }};">
                 {{ block.settings.t4wp_additional_text }}
               </p>
             {% endif %}
           </a>
+
         {% elsif block.type == 'video_block_grid' %}
           <div class="video-block"
             style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
