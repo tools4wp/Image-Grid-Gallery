@@ -5,10 +5,11 @@
     {
       "type": "range",
       "id": "t4wp_grid_column_size",
-      "label": "Grid Column Size (1-9)",
+      "label": "Grid Column Size (1-9fr)",
       "min": 1,
       "max": 9,
-      "default": 3
+      "default": 3,
+      "unit": "fr"
     },
     {
       "type": "header",
@@ -24,10 +25,28 @@
       "type": "range",
       "id": "t4wp_container_width",
       "label": "Container Width (px)",
-      "min": 900,
-      "max": 1200,
-      "default": 1100,
+      "min": 1000,
+      "max": 1500,
+      "default": 1200,
       "step": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "t4wp_container_radius",
+      "label": "Container Radius (0-50px)",
+      "min": 0,
+      "max": 50,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "t4wp_grid_radius",
+      "label": "Grid Radius (0-50px)",
+      "min": 0,
+      "max": 50,
+      "default": 0,
       "unit": "px"
     },
     {
@@ -80,13 +99,29 @@
     },
     {
       "type": "header",
-      "content": "Extra"
+      "content": "Extra Settings"
     },
     {
       "type": "checkbox",
       "id": "t4wp_remove_bottom_margin",
       "default": false,
       "label": "Remove Bottom Margin"
+    },
+    {
+      "type": "color",
+      "id": "t4wp_container_color",
+      "label": "Container background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "t4wp_padding_lr",
+      "label": "Left and Right Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
     }
   ],
   "blocks": [
@@ -343,10 +378,13 @@
 {% assign t4wp_padding_bottom = section.settings.t4wp_padding_bottom %}
 {% assign t4wp_full_width = section.settings.t4wp_full_width %}
 {% assign t4wp_remove_bottom_margin = section.settings.t4wp_remove_bottom_margin %}
+{% assign t4wp_container_color = section.settings.t4wp_container_color %}
+{% assign t4wp_padding_lr = section.settings.t4wp_padding_lr %}
 
-<div class="t4wp_container" style="{% if t4wp_full_width %}width: 100%;{% else %}max-width: {{ t4wp_container_width }}px; margin: 0 auto;{% endif %}">
-  <div class="t4wp_image-grid-gallery" style="padding-top: {{ t4wp_padding_top }}px; padding-bottom: {{ t4wp_padding_bottom }}px; {% unless t4wp_remove_bottom_margin %}margin-bottom: 90px;{% endunless %}">
-    <div class="parent">
+
+<div class="t4wp_container" style="{% if t4wp_full_width %}width: 100%;{% else %}max-width: {{ t4wp_container_width }}px; margin: 0 auto; padding-left: {{ t4wp_padding_lr }}px; padding-right: {{ t4wp_padding_lr }}px;{% endif %}; background-color: {{ t4wp_container_color }}; border-radius: {{ section.settings.t4wp_container_radius }}px; overflow: hidden;">
+  <div class="t4wp_image-grid-gallery" style="padding-top: {{ t4wp_padding_top }}px; padding-bottom: {{ t4wp_padding_bottom }}px; {% unless t4wp_remove_bottom_margin %}margin-bottom: 90px;{% endunless %}; ">
+    <div class="parent" style = "border-radius: {{ section.settings.t4wp_grid_radius }}px; overflow: hidden;">
       {% for block in section.blocks %}
         {% if block.type == 'image_block' and block.settings.t4wp_image %}
           <div class="image-block"
@@ -402,7 +440,6 @@
             {% endif %}
           </a>
 
-
         {% elsif block.type == 'video_block_grid' %}
           <div class="video-block"
             style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
@@ -432,14 +469,14 @@
                 </video>
               </div>
             {% endif %}
-
-
           </div>
         {% endif %}
       {% endfor %}
     </div>
   </div>
 </div>
+
+
 
 <style>
   /* Parent grid container */
@@ -451,29 +488,36 @@
     height: {{ t4wp_grid_height }}px;
   }
 
-/* Image block */
-.image-block {
-    overflow: hidden;
-    border-radius: {{ t4wp_image_radius }}px;
-}
-
-.image-wrapper {
-    display: block;
-    width: 100%;
-    /* overflow: hidden; */
-}
-
-.image-wrapper img {
-    width: 100%;
-    height: 100%; /* Maintain aspect ratio */
-    object-fit: cover; /* Adjust as needed */
-    transition: transform 0.3s ease;
-    border-radius: calc({{ t4wp_image_radius }}px / 2);
-}
-
-.image-wrapper img:hover {
-    transform: scale(1.1);
-}
+  /* Container Settings */
+  .t4wp_container {
+    background-color: {{ t4wp_container_color }};
+    padding-left: {{ t4wp_padding_lr }}px; 
+    padding-right: {{ t4wp_padding_lr }}px;
+  }
+  
+  /* Image block */
+  .image-block {
+      overflow: hidden;
+      border-radius: {{ t4wp_image_radius }}px;
+  }
+  
+  .image-wrapper {
+      display: block;
+      width: 100%;
+      /* overflow: hidden; */
+  }
+  
+  .image-wrapper img {
+      width: 100%;
+      height: 100%; /* Maintain aspect ratio */
+      object-fit: cover; /* Adjust as needed */
+      transition: transform 0.3s ease;
+      border-radius: calc({{ t4wp_image_radius }}px / 2);
+  }
+  
+  .image-wrapper img:hover {
+      transform: scale(1.1);
+  }
 
 
   /* Text block */
@@ -495,10 +539,6 @@
   .additional-text {
     font-size: 16px; /* Adjust the font size as needed */
     margin-top: 10px; /* Space between t4wp_subtitle/title and additional text */
-  }
-
-  .t4wp_container {
-    margin: 0 auto;
   }
 
   .video-block {
@@ -525,6 +565,9 @@
 
     .t4wp_container {
       width: auto;
+      margin: 0 auto;
+      padding-left: 15px !important; 
+      padding-right: 15px !important;
     }
   }
 </style>
