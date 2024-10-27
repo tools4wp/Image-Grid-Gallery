@@ -110,8 +110,8 @@
       "type": "range",
       "id": "t4wp_grid_height_mobile",
       "min": 0,
-      "max": 300,
-      "step": 20,
+      "max": 350,
+      "step": 10,
       "unit": "px",
       "label": "Mobile block Height",
       "default": 0
@@ -127,12 +127,6 @@
       "label": "Remove Bottom Margin"
     },
     {
-      "type": "color",
-      "id": "t4wp_container_color",
-      "label": "Container background Color",
-      "default": "#ffffff"
-    },
-    {
       "type": "range",
       "id": "t4wp_padding_lr",
       "label": "Left and Right Padding",
@@ -141,6 +135,56 @@
       "step": 4,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "color",
+      "id": "t4wp_container_color",
+      "label": "Container background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "t4wp_container_text_color",
+      "label": "Text Color",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "t4wp_container_subheading",
+      "label": "Container Subheading",
+      "placeholder": "1964"
+    },
+    {
+      "type": "text",
+      "id": "t4wp_container_heading",
+      "placeholder": "Best Year",
+      "label": "Container Heading"
+    },
+    {
+      "type": "select",
+      "id": "t4wp_container_header_size",
+      "label": "Header Size",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "id": "t4wp_container_additional_text",
+      "type": "textarea",
+      "label": "Additional Text",
+      "placeholder": "Additional Text"
     }
   ],
   "blocks": [
@@ -221,10 +265,11 @@
           "type": "range",
           "id": "t4wp_icon_size",
           "label": "Icon Size (px)",
-          "min": 10,
-          "max": 100,
-          "default": 30,
-          "unit": "px"
+          "min": 30,
+          "max": 150,
+          "default": 50,
+          "unit": "px",
+          "step": 10
         },
         {
           "id": "t4wp_subtitle",
@@ -263,6 +308,26 @@
           "type": "textarea",
           "label": "Additional Text",
           "default": "Additional Text"
+        },
+        {
+          "type": "select",
+          "id": "t4wp_text_block_align",
+          "label": "Text Alignment",
+          "default": "center",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ]
         },
         {
           "id": "t4wp_text_box_url",
@@ -402,8 +467,33 @@
 {% assign t4wp_grid_height_mobile = block.settings.t4wp_grid_height_mobile %}
 
 
-<div class="t4wp_container section-{{ section.id }}" style="{% if t4wp_full_width %}width: 100%;{% else %}max-width: {{ t4wp_container_width }}px; margin: 0 auto; padding-left: {{ t4wp_padding_lr }}px; padding-right: {{ t4wp_padding_lr }}px;{% endif %}; background-color: {{ t4wp_container_color }}; border-radius: {{ section.settings.t4wp_container_radius }}px; overflow: hidden;">
+<div class="t4wp_container section-{{ section.id }}" style="{% if t4wp_full_width %}width: 100%;{% else %}max-width: {{ t4wp_container_width }}px; margin: 0 auto; padding-left: {{ t4wp_padding_lr }}px; padding-right: {{ t4wp_padding_lr }}px; width: 95%;{% endif %}; background-color: {{ t4wp_container_color }}; border-radius: {{ section.settings.t4wp_container_radius }}px; overflow: hidden; ">
   <div class="t4wp_image-grid-gallery section-{{ section.id }}" style="padding-top: {{ t4wp_padding_top }}px; padding-bottom: {{ t4wp_padding_bottom }}px; {% unless t4wp_remove_bottom_margin %}margin-bottom: 90px;{% endunless %}; ">
+    
+    <p class="text-t4wp_container_subheading section-{{ section.id }}" style="color: {{ section.settings.t4wp_container_text_color }}; text-align: center;">
+      {{ section.settings.t4wp_container_subheading }}
+    </p>
+    
+    {% if section.settings.t4wp_container_header_size == 'small' %}
+      <h3 class="text-title" style="color: {{ section.settings.t4wp_container_text_color }}; text-align: center;">
+        {{ section.settings.t4wp_container_heading }}
+      </h3>
+    {% elsif section.settings.t4wp_container_header_size == 'large' %}
+      <h1 class="text-title" style="color: {{ section.settings.t4wp_container_text_color }}; text-align: center;">
+        {{ section.settings.t4wp_container_heading }}
+      </h1>
+    {% else %}
+      <h2 class="text-title" style="color: {{ section.settings.t4wp_container_text_color }}; text-align: center;">
+        {{ section.settings.t4wp_container_heading }}
+      </h2>
+    {% endif %}
+    
+    {% if section.settings.t4wp_container_additional_text %}
+      <p class="additional-text section-{{ section.id }}" style="color: {{ section.settings.t4wp_container_text_color }}; text-align: center;">
+        {{ section.settings.t4wp_container_additional_text }}
+      </p>
+    {% endif %}
+    
     <div class="parent section-{{ section.id }}" style = "border-radius: {{ section.settings.t4wp_grid_radius }}px; overflow: hidden;">
       {% for block in section.blocks %}
         {% if block.type == 'image_block' and block.settings.t4wp_image %}
@@ -415,50 +505,51 @@
                 <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </a>
             {% else %}
-              <div class="image-wrapper" style="height: 100%;">
+              <div class="image-wrapper section-{{ section.id }}" style="height: 100%;">
                 <img src="{{ block.settings.t4wp_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_image.alt | escape }}" />
               </div>
             {% endif %}
           </div>
         {% elsif block.type == 'grid-text-item' %}
-          <a href="{{ block.settings.t4wp_text_box_url }}" class="text-block"
+          <div href="{{ block.settings.t4wp_text_box_url }}" class="text-block section-{{ section.id }}"
              style="grid-column: {{ block.settings.t4wp_column_start }} / {{ block.settings.t4wp_column_end }};
                     grid-row: {{ block.settings.t4wp_row_start }} / {{ block.settings.t4wp_row_end }};
                     padding-top: {{ block.settings.t4wp_text_box_padding }}px;
                     padding-bottom: {{ block.settings.t4wp_text_box_padding }}px;
                     background-color: {{ block.settings.t4wp_background_color }};
-                    margin: {{ block.settings.t4wp_text_box_margin }}px; text-decoration: none;">
+                    margin: {{ block.settings.t4wp_text_box_margin }}px; text-decoration: none;
+                    align-items: {{ block.settings.t4wp_text_block_align }};">
           
             {% if block.settings.t4wp_text_image != blank %}
-              <div class="image-wrapper">
+              <div class="image-wrapper section-{{ section.id }}">
                 <img src="{{ block.settings.t4wp_text_image | img_url: 'medium' }}" alt="{{ block.settings.t4wp_text_image.alt | escape }}" style="width: {{ block.settings.t4wp_icon_size }}px; height: auto;"/>                  
               </div>
             {% endif %}
           
-            <p class="text-t4wp_subtitle" style="color: {{ block.settings.t4wp_text_color }};">
+            <p class="text-t4wp_subtitle section-{{ section.id }}" style="color: {{ block.settings.t4wp_text_color }}; ">
               {{ block.settings.t4wp_subtitle }}
             </p>
           
             {% if block.settings.t4wp_header_size == 'small' %}
-              <h3 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+              <h3 class="text-title section-{{ section.id }}" style="color: {{ block.settings.t4wp_text_color }};">
                 {{ block.settings.t4wp_heading }}
               </h3>
             {% elsif block.settings.t4wp_header_size == 'large' %}
-              <h1 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+              <h1 class="text-title section-{{ section.id }}" style="color: {{ block.settings.t4wp_text_color }};">
                 {{ block.settings.t4wp_heading }}
               </h1>
             {% else %}
-              <h2 class="text-title" style="color: {{ block.settings.t4wp_text_color }};">
+              <h2 class="text-title section-{{ section.id }}" style="color: {{ block.settings.t4wp_text_color }};">
                 {{ block.settings.t4wp_heading }}
               </h2>
             {% endif %}
           
             {% if block.settings.t4wp_additional_text %}
-              <p class="additional-text" style="color: {{ block.settings.t4wp_text_color }};">
+              <p class="additional-textsection-{{ section.id }}" style="color: {{ block.settings.t4wp_text_color }};">
                 {{ block.settings.t4wp_additional_text }}
               </p>
             {% endif %}
-          </a>
+          </div>
 
         {% elsif block.type == 'video_block_grid' %}
           <div class="video-block section-{{ section.id }}"
@@ -468,7 +559,7 @@
             
             {% if t4wp_video_url contains 'youtube.com' or t4wp_video_url contains 'youtu.be' %}
               {% assign video_id = t4wp_video_url | split: '=' | last %}
-              <iframe class="video-wrapper" width="100%" height="100%" 
+              <iframe class="video-wrapper section-{{ section.id }}" width="100%" height="100%" 
                       src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&playlist={{ video_id }}" 
                       class="js-youtube" 
                       frameborder="0" 
@@ -476,7 +567,7 @@
                       allowfullscreen>
               </iframe>
             {% elsif t4wp_video_url contains 'vimeo.com' %}
-              <iframe class="video-wrapper" width="100%" height="100%" 
+              <iframe class="video-wrapper section-{{ section.id }}" width="100%" height="100%" 
                       src="{{ t4wp_video_url | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}" 
                       frameborder="0" 
                       allowfullscreen>
@@ -523,21 +614,21 @@
   }
   
   .section-{{ section.id }} .image-wrapper {
-      display: block;
-      width: 100%;
-      /* overflow: hidden; */
+    display: block;
+    /* width: 100%; */
+    /* overflow: hidden; */
   }
   
   .section-{{ section.id }} .image-wrapper img {
-      width: 100%;
-      height: 100%; /* Maintain aspect ratio */
-      object-fit: cover; /* Adjust as needed */
-      transition: transform 0.3s ease;
-      border-radius: calc({{ t4wp_image_radius }}px / 2);
+    width: 100%;
+    height: 100%; /* Maintain aspect ratio */
+    object-fit: cover; /* Adjust as needed */
+    transition: transform 0.3s ease;
+    border-radius: calc({{ t4wp_image_radius }}px / 2);
   }
   
   .section-{{ section.id }} .image-wrapper img:hover {
-      transform: scale(1.1);
+    transform: scale(1.1);
   }
 
 
@@ -546,8 +637,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
     border-radius: {{ t4wp_image_radius }}px;
     cursor: pointer; /* Make it look clickable */
   }
@@ -572,10 +661,6 @@
       transform: scale(1.1) !important;
     }
 
-    .section-{{ section.id }} .image-wrapper, .image-block, .text-block {
-      border-radius: 0px !important;
-    }
-
     .section-{{ section.id }} .parent {
       margin: 0;
       display: flex;
@@ -587,17 +672,16 @@
     .section-{{ section.id }} .t4wp_container {
       width: auto;
       margin: 0 auto;
-      padding-left: 15px !important; 
-      padding-right: 15px !important;
+      padding-left: 1.5rem !important; 
+      padding-right: 1.5rem !important;
     }
-    .section-{{ section.id }} .video-block {
-      height: {{ section.settings.t4wp_grid_height_mobile }}px !important;
-    }
-    .section-{{ section.id }} .text-block {
-      height: {{ section.settings.t4wp_grid_height_mobile }}px !important;
-    }
+    
+    .section-{{ section.id }} .video-block,
+    .section-{{ section.id }} .text-block,
     .section-{{ section.id }} .image-block {
       height: {{ section.settings.t4wp_grid_height_mobile }}px !important;
+      border-radius: 0px !important;
     }
   }
+
 </style>
